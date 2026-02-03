@@ -30,7 +30,8 @@ class _KYCInfoViewState extends State<KYCInfoView> {
   // ---------------- Dropdown values ----------------
   String selectedCountry = "Pakistan";
   String selectedCity = "Islamabad";
-
+  bool isAccurate = false;
+  bool isPolicyAgreed = false;
   // ---------------- Step Titles ----------------
   final List<Map<String, String>> stepInfo = [
     {
@@ -272,10 +273,11 @@ class _KYCInfoViewState extends State<KYCInfoView> {
   }
 
   Widget _passport() {
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _sectionTitle("Passport"),
+        _sectionTitle("Live Face ID"),
         5.heightSpace,
         Container(
           padding: EdgeInsets.symmetric(vertical: 24.h),
@@ -324,7 +326,7 @@ class _KYCInfoViewState extends State<KYCInfoView> {
           ),
         ),
         24.heightSpace,
-        _sectionTitle("Passport"),
+        _sectionTitle("Front Side ID Photo"),
         5.heightSpace,
         Container(
           padding: EdgeInsets.symmetric(vertical: 24.h),
@@ -358,7 +360,7 @@ class _KYCInfoViewState extends State<KYCInfoView> {
           ),
         ),
         24.heightSpace,
-        _sectionTitle("Passport"),
+        _sectionTitle("Back Side ID Photo"),
         5.heightSpace,
         Container(
           padding: EdgeInsets.symmetric(vertical: 24.h),
@@ -392,10 +394,63 @@ class _KYCInfoViewState extends State<KYCInfoView> {
           ),
         ),
         24.heightSpace,
+        _buildCheckboxRow(
+          text: "I confirm that the information provided is accurate.",
+          value: isAccurate,
+          onChanged: (val) {
+            setState(() {
+              isAccurate = val!;
+            });
+          },
+        ),
+        12.heightSpace,
+
+        _buildCheckboxRow(
+          text: "I agree to Jobssy’s business posting policies.",
+          value: isPolicyAgreed,
+          onChanged: (val) {
+            setState(() {
+              isPolicyAgreed = val!;
+            });
+          },
+        ),
       ],
     );
   }
+  Widget _buildCheckboxRow({
+    required String text,
+    required bool value,
+    required ValueChanged<bool?> onChanged,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 24.r,
+          width: 24.r,
+          child: Checkbox(
+            value: value,
+            onChanged: onChanged,
+            activeColor: AppColor.btnBlue,
+            side: const BorderSide(color: Color(0xffD1D1D1), width: 1.5), // Grey border jaisa image mein hai
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4.r), // Square look with slight curves
+            ),
+          ),
+        ),
+        12.widthSpace,
+        Expanded(
+          child: Text(
+            text,
+            style: FontHelper.f13w400Regular.copyWith(
+              color: const Color(0xff4D4D4D), // Dark grey color
 
+            ),
+          ),
+        ),
+      ],
+    );
+  }
   // ---------------- Reusable Widgets ----------------
 
   Widget _sectionTitle(String title) => Text(

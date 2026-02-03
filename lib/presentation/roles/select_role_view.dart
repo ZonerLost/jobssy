@@ -5,6 +5,7 @@ import 'package:jobssy/presentation/authentication/employee_sign_up/signup_view.
 
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
+import '../../core/global_components/primary_button.dart';
 import '../../core/utils/extensions.dart';
 import '../../generated/assets.dart';
 import '../customer_auth/customer_signup_view.dart';
@@ -24,6 +25,15 @@ class _SelectRoleViewState extends State<SelectRoleView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_rounded,
+          color: AppColor.darkBlueText,
+          ),
+          onPressed: () => Get.back(),
+        ),
+      ),
+
       body: SafeArea(
         child: SizedBox(
           width: double.infinity,
@@ -100,6 +110,32 @@ class _SelectRoleViewState extends State<SelectRoleView> {
               ),
 
               const Spacer(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w,vertical: 20.h),
+                child: PrimaryButton(
+                  height: 48.h,
+                  onTap: () {
+                    if(selectedRole==1){
+                      Get.to(() => const CustomerSignUpView());
+
+                    }else if(selectedRole==0){
+                      Get.to(() => const SignUpView());
+
+                    }else{
+
+                    }
+                    // Get.to(() => const CustomerVerifyEmailView());
+                  },
+                  childWidget: Text(
+                    "Continue",
+                    style: FontHelper.f14w500MediumStyle.copyWith(
+                        fontWeight: FontWeight.w600, color: AppColor.white),
+                  ),
+                  bgColor: AppColor.btnBlue,
+                  borderRadius: 12.r,
+                  width: double.infinity,
+                ),
+              ),
 
               // Yahan aap apna PrimaryButton bhi add kar sakte hain "Continue" ke liye
             ],
